@@ -122,7 +122,7 @@ class Product extends Entity {
 ```
 
 The complete list of valid attributes for property definitions can be found in
-LoopBack 3's [Model definition section](../lb3/Model-definition-JSON-file.html#properties)
+LoopBack 3's [Model definition section](https://loopback.io/doc/en/lb3/Model-definition-JSON-file.md#properties)
 
 <!-- NOTE(kjdelisle): Until we have a metadata docs section, link to the
 package in the repository. -->
@@ -139,15 +139,15 @@ class Product extends Entity {
 
 ### Array Property Decorator
 
-There is a limitation to the metadata that can be automatically inferred by 
-LoopBack, due to the nature of arrays in JavaScript. In JavaScript, arrays do 
-not possess any information about the types of their members. By traversing an 
-array, you can inspect the members of an array to determine if they are of a 
-primitive type (string, number, array, boolean), object or function, but this 
+There is a limitation to the metadata that can be automatically inferred by
+LoopBack, due to the nature of arrays in JavaScript. In JavaScript, arrays do
+not possess any information about the types of their members. By traversing an
+array, you can inspect the members of an array to determine if they are of a
+primitive type (string, number, array, boolean), object or function, but this
 would not tell us anything about what the value would be if it were an object or
 function.
 
-For consistency, we require the use of the `@property.array` 
+For consistency, we require the use of the `@property.array`
 decorator, which adds the appropriate metadata for type inference of your array
 properties.
 
@@ -228,9 +228,9 @@ const jsonSchema = getJsonSchema(Product);
 }
 ```
 
-If a custom type is specified for a decorated property in a model definition, 
+If a custom type is specified for a decorated property in a model definition,
 then a reference [`$ref`](http://json-schema.org/latest/json-schema-core.html#rfc.section.8)
-field is created for it and a `definitions` sub-schema is created at the 
+field is created for it and a `definitions` sub-schema is created at the
 top-level of the schema. The `definitions` sub-schema is populated with the type
 definition by recursively calling `getJsonSchema` to build its properties.
 This allows for complex and nested custom type definition building.

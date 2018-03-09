@@ -53,7 +53,7 @@ In a browser, visit [http://127.0.0.1:3000/ping](http://127.0.0.1:3000/ping).
 
 ## Adding your own controller
 
-Now that we have a basic project created, it's time to add our own [controller](Controllers.html).
+Now that we have a basic project created, it's time to add our own [controller](Controllers.md).
 Let's add a simple "Hello World" controller as follows:
 
 * Create a new file in `/src/controllers/` called `hello.controller.ts`.

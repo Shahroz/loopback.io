@@ -10,17 +10,17 @@ summary:
 
 ## Overview
 
-LoopBack 4 is designed to be highly extensible. For architectural rationale and motivation, see [Crafting LoopBack 4](Crafting-LoopBack-4.html).
+LoopBack 4 is designed to be highly extensible. For architectural rationale and motivation, see [Crafting LoopBack 4](Crafting-LoopBack-4.md).
 
 ## Building blocks for extensibility
 
-The [@loopback/context](https://github.com/strongloop/loopback-next/tree/master/packages/context) module implements an [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control) (IoC) container called [Context](Context.html) as a service registry that supports [Dependency injection](Dependency-injection.html).
+The [@loopback/context](https://github.com/strongloop/loopback-next/tree/master/packages/context) module implements an [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control) (IoC) container called [Context](Context.md) as a service registry that supports [Dependency injection](Dependency-injection.md).
 
 The IoC container decouples service providers and consumers. A service provider can be bound to the context with a key, which can be treated as an address of the service provider.
 
 The diagram below shows how the Context manages services and their dependencies.
 
-![loopback-ioc](/images/lb4/loopback-ioc.png)
+![loopback-ioc](./img/loopback-ioc.png)
 
 In the example above, there are three services in the Context and each of them are bound to a unique key.
 
@@ -41,7 +41,7 @@ import {inject, Context} from '@loopback/context';
 class UserController {
   // UserRepository and PasswordHasher are injected via the constructor
   constructor(
-    @inject('repositories.UserRepository') private userRepository: UserRepository, 
+    @inject('repositories.UserRepository') private userRepository: UserRepository,
     @inject('utilities.PasswordHasher') private passwordHasher: PasswordHasher),
   ) {}
 
@@ -64,7 +64,7 @@ ctx.bind('utilities.PasswordHash').to((password) => { /* ... */ })
 ctx.bind('controllers.UserController').toClass(UserController);
 
 // Locate the an instance of UserController from the context
-const userController= await ctx.get<UserController>('controller.UserController');
+const userController: UserController = await ctx.get('controller.UserController');
 // Run the log()
 const ok = await logger.login('John', 'MyPassWord');
 ```
@@ -75,7 +75,7 @@ Now you might wonder why the IoC container is fundamental to extensibility. Here
 
 2. Services can be organized as extension points and extensions. For example, to allow multiple authentication strategies, the `authentication` component can define an extension point as `authentication-manager` and various authentication strategies such as user/password, LDAP, oAuth2 can be contributed to the extension point as extensions. The relation will look like:
 
-![loopback-extension](/images/lb4/loopback-extension.png)
+![loopback-extension](./img/loopback-extension.png)
 
 To allow a list of extensions to be contributed to LoopBack framework and applications, we introduce `Component` as the packaging model to bundle extensions. A component is either a npm module or a local folder structure that contains one or more extensions. It's then exported as a class implementing the `Component` interface. For example:
 
@@ -99,12 +99,12 @@ export class UserManagementComponent implements Component {
 
 The interaction between the application context and `UserManagement` component is illustrated below:
 
-![loopback-component](/images/lb4/loopback-component.png)
+![loopback-component](./img/loopback-component.png)
 
 For more information about components, see:
 
-- [Creating components](Creating-components.html)
-- [Using Components](Using-components.html)
+- [Creating components](Creating-components.md)
+- [Using Components](Using-components.md)
 
 ## Types of extensions
 
@@ -138,7 +138,7 @@ An application may consist of multiple components for the business logic. For ex
 - AddressBook
 - OrderManagement
 
-An application-level component usually contributes:   
+An application-level component usually contributes:
 
 - Controllers
 - Repositories
@@ -149,5 +149,10 @@ An application-level component usually contributes:
 
 ### Learn from existing ones
 
-- [loopback4-example-log-extension](https://github.com/strongloop/loopback-next/tree/master/packages/example-log-extension)
+- [loopback4-example-log-extension](https://github.com/strongloop/loopback4-example-log-extension)
 - [@loopback/authentication](https://github.com/strongloop/loopback-next/tree/master/packages/authentication)
+
+### Create your own from the starter
+
+The [loopback4-extension-starter](https://github.com/strongloop/loopback4-extension-starter) project provides a template to create your own LoopBack 4 extensions as a component. Please follow the instructions to get started.
+

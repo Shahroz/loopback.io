@@ -17,7 +17,7 @@ The `Route` object and its associated types are provided as a part of the
 
 ## Operations
 
-Operations are JavaScript functions that accept Parameters. They can be implemented as plain JavaScript functions or as methods in [Controllers](Controllers.html).
+Operations are JavaScript functions that accept Parameters. They can be implemented as plain JavaScript functions or as methods in [Controllers](Controllers.md).
 
 ```js
 // greet is a basic operation
@@ -79,6 +79,7 @@ application.
 import {RestApplication, RestServer, Route} from '@loopback/rest';
 import {OperationObject} from '@loopback/openapi-spec';
 
+const app = new RestApplication();
 const spec: OperationObject = {
   parameters: [{name: 'name', in: 'query', type: 'string'}],
   responses: {
@@ -94,11 +95,12 @@ function greet(name: string) {
   return `hello ${name}`;
 }
 
-const app = new RestApplication();
-const route = new Route('get', '/', spec, greet);
-app.route(route); // attaches route to RestServer
-
-app.start();
+(async function start() {
+  const server = await app.getServer(RestServer);
+  const route = new Route('get', '/', spec, greet);
+  server.route(route);
+  await app.start();
+})();
 ```
 
 ### Using Route decorators with controller methods
@@ -138,7 +140,9 @@ const app = new RestApplication();
 
 app.controller(GreetController);
 
-app.start();
+(async function start() {
+  await app.start();
+})();
 ```
 
 ## Invoking operations using Routes

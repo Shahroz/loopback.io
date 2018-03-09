@@ -9,7 +9,7 @@ summary:
 ---
 
 {% include previous.html content="
-This article continues off from [Testing the API](./Testing-the-API.html).
+This article continues off from [Testing the API](./Testing-the-API.md).
 " %}
 
 ## Define your testing strategy
@@ -69,8 +69,8 @@ To summarize:
 - Prefer fast and focused unit tests over slow app-wide end-to-end tests.
 - Watch out for integration points that are not covered by unit-tests and add integration tests to verify your units work well together.
 
-See [Testing Your Application](Testing-Your-application.html) for a reference manual on automated tests.
+See [Testing Your Application](Testing-Your-application.md) for a reference manual on automated tests.
 
 {% include next.html content= "
-[Implementing features](./Implementing-features.html)
+[Implementing features](./Implementing-features.md)
 " %}

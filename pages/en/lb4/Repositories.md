@@ -253,7 +253,7 @@ async updateAccount(where, data) {
 }
 ```
 
-Please See [Testing Your Application](Testing-Your-Application.html) section in order to set up and write unit, acceptance, and integration tests for your application.
+Please See [Testing Your Application](Testing-Your-Application.md) section in order to set up and write unit, acceptance, and integration tests for your application.
 
 ## Persisting Data without Juggler [Using MySQL database]
 LoopBack 4 gives you the flexibility to create your own custom Datasources which utilize your own custom connector for your favourite back end database. You can then fine tune your CRUD methods to your liking.

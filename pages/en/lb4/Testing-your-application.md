@@ -20,7 +20,7 @@ A thorough automated test suite is important because it:
 
 We encourage writing tests from a few perspectives, mainly [black-box testing](https://en.wikipedia.org/wiki/Black-box_testing) (acceptance) and [white-box testing](https://en.wikipedia.org/wiki/White-box_testing) (integration and unit). Tests are usually written using typical patterns such as [`arrange/act/assert`](https://msdn.microsoft.com/en-us/library/hh694602.aspx#Anchor_3) or [`given/when/then`](https://martinfowler.com/bliki/GivenWhenThen.html). While both styles work well, just pick one that you're comfortable with and start writing tests!
 
-For an introduction to automated testing, see [Define your testing strategy](Thinking-in-LoopBack.html#define-your-testing-strategy); for a step-by-step tutorial, see [Incrementally implement features](Thinking-in-LoopBack.html#incrementally-implement-features).
+For an introduction to automated testing, see [Define your testing strategy](Thinking-in-LoopBack.md#define-your-testing-strategy); for a step-by-step tutorial, see [Incrementally implement features](Thinking-in-LoopBack.md#incrementally-implement-features).
 
 {% include important.html content="A great test suite requires you to think smaller and favor fast, focused unit tests over slow application-wide end-to-end tests
 " %}
@@ -47,7 +47,7 @@ so using the CLI is not an option with the beta release.
 " %}
 
 <!--
-If you are just getting started with LoopBack, use the LoopBack command-line tool (CLI)  `loopback-cli`. It's ready to use and installs simply by `npm install -g loopback-cli`. You don't need to do any extra steps for setup, and can head straight to the [next section](Testing-Your-Application#acceptance-testing.html).
+If you are just getting started with LoopBack, use the LoopBack command-line tool (CLI)  `loopback-cli`. It's ready to use and installs simply by `npm install -g loopback-cli`. You don't need to do any extra steps for setup, and can head straight to the [next section](Testing-Your-Application#acceptance-testing.md).
 -->
 
 ### Setup testing infrastructure manually
@@ -207,7 +207,7 @@ There are three kinds of test doubles provided by Sinon.JS:
 
 #### Create a stub Repository
 
-When writing an application accessing data in a database, best practice is to use [repositories](Repositories.html) to encapsulate all data-access/persistence-related code and let other parts of the application (typically [controllers](Controllers.html)) to depend on these repositories for data access. To test Repository dependents (for example, Controllers) in isolation, we need to provide a test double, usually as a test stub.
+When writing an application accessing data in a database, best practice is to use [repositories](Repositories.md) to encapsulate all data-access/persistence-related code and let other parts of the application (typically [controllers](Controllers.md)) to depend on these repositories for data access. To test Repository dependents (for example, Controllers) in isolation, we need to provide a test double, usually as a test stub.
 
 In traditional object-oriented languages like Java or C#, to enable unit tests to provide a custom implementation of the repository API, the controller needs to depend on an interface describing the API, and the repository implementation needs to implement this interface. The situation is easier in JavaScript and TypeScript. Thanks to the dynamic nature of the language, it’s possible to mock/stub entire classes.
 

@@ -23,18 +23,16 @@ import {RestApplication, RestServer} from '@loopback/rest';
 export class HelloWorldApp extends RestApplication {
   constructor() {
     super();
-    // give our RestServer instance a sequence handler function which
-    // returns the Hello World string for all requests
-    // with RestApplication, handler function can be registered
-    // at app level
-    app.handler((sequence, request, response) => {
-      sequence.send(response, 'Hello World!');
-    });
   }
 
   async start() {
     // get a singleton HTTP server instance
     const rest = await this.getServer(RestServer);
+    // give our RestServer instance a sequence handler function which
+    // returns the Hello World string for all requests
+    rest.handler((sequence, request, response) => {
+      sequence.send(response, 'Hello World!');
+    });
     // call start on application class, which in turn starts all registered
     // servers
     await super.start();
@@ -50,10 +48,9 @@ export class HelloWorldApp extends RestApplication {
 You can add server instances to your application via the `app.server()` method individually or as an array using `app.servers()` method. Using `app.server()` allows you to uniquely name your binding key for your specific server instance. The following example demonstrates how to use these functions:
 
 ```ts
-import {Application} from '@loopback/core';
-import {RestServer} from '@loopback/rest';
+import {RestApplication, RestServer} from '@loopback/rest';
 
-export class HelloWorldApp extends Application {
+export class HelloWorldApp extends RestApplication {
   constructor() {
     super();
     // This server instance will be bound under "servers.fooServer".
@@ -65,9 +62,9 @@ export class HelloWorldApp extends Application {
 }
 ```
 
-You can also add multiple servers in the constructor of your application class as shown [here](Application.html#servers).
+You can also add multiple servers in the constructor of your application class as shown [here](Application.md#servers).
 
 ## Next Steps
 
-- Learn about [Server-level Context](Context.html#server-level-context)
-- Learn more about [creating your own servers!](Creating-components.html#creating-your-own-servers)
+- Learn about [Server-level Context](Context.md#server-level-context)
+- Learn more about [creating your own servers!](Creating-components.md#creating-your-own-servers)

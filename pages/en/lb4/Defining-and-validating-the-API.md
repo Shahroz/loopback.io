@@ -289,17 +289,9 @@ _.merge(spec, CategoryAPI);
 export default spec;
 ```
 
-You can then bind the full spec to the application using `app.api()`.
-This works well for applications with a single REST server, because
-there is only one API definition involved.
+You can then bind the full spec to the application using `server.spec()`. This is done on the server level, because each server instance can expose a different (sub)set of API.
 
-If you are building an application with multiple REST servers,
-where each server provides a different API, then you need 
-to call `server.api()` instead.
-
-You also need to associate the controllers implementing the spec with the app
-using `app.controller(GreetController)`. This is not done on the server level
-because a controller may be used with multiple server instances, and types!
+You also need to associate the controllers implementing the spec with the app using `app.controller(GreetController)`. This is not done on the server level because a controller may be used with multiple server instances, and types!
 
 ```ts
 // application.ts
@@ -310,18 +302,20 @@ import { ProductController, DealController, CategoryController } from "./control
 export class YourMicroservice extends RestApplication {
 
   constructor() {
-    super({
-      rest: {
-        port: 3001
-      }
-    });
+    super();
     const app = this;
 
     app.controller(ProductController);
     app.controller(DealController);
     app.controller(CategoryController);
-    //inject your spec
-    app.api(spec);
+
+  }
+  async start() {
+    const server = await app.getServer(RestServer);
+    // inject your spec here!
+    server.api(spec);
+    server.bind("rest.port").to(3001);
+    await super.start();
   }
   // etc...
 }
@@ -350,8 +344,8 @@ describe('API specification', () => {
 });
 ```
 
-See [Validate your OpenAPI specification](Testing-your-application.html#validate-your-openapi-specification) from [Testing your application](Testing-your-application.html) for more details.
+See [Validate your OpenAPI specification](Testing-your-application.md#validate-your-openapi-specification) from [Testing your application](Testing-your-application.md) for more details.
 
 {% include next.html content= "
-[Testing the API](./Testing-the-API.html)
+[Testing the API](./Testing-the-API.md)
 " %}

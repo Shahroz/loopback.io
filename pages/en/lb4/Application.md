@@ -12,8 +12,8 @@ summary:
 
 In LoopBack 4, the [`Application`](http://apidocs.strongloop.com/@loopback%2fcore/#Application)
 class is the central class for setting up all of your module's components,
-controllers, servers and bindings. The `Application` class extends 
-[Context](Context.html), and provides the controls for starting and stopping
+controllers, servers and bindings. The `Application` class extends
+[Context](Context.md), and provides the controls for starting and stopping
 itself and its associated servers.
 
 When using LoopBack 4, we strongly encourage you to create your own subclass
@@ -25,30 +25,37 @@ By making your own application class, you can perform several additional
 tasks as a part of your setup:
 - Pass configuration into the base class constructor
 - Perform some asynchronous wireup before application start
-- Perform some graceful cleanup on application stop 
+- Perform some graceful cleanup on application stop
 
 {% include code-caption.html content="src/widget-application.ts" %}
 ```ts
 import {Application} from '@loopback/core';
 import {RestComponent, RestServer} from '@loopback/rest';
 import {SamoflangeController, DoohickeyController} from './controllers';
+import {WidgetApi} from './apidef/';
 
 export class WidgetApplication extends Application {
   constructor() {
     // This is where you would pass configuration to the base constructor
     // (as well as handle your own!)
-    super({
-      rest: {
-        port: 8080
-      }
-    });
-
+    super();
     const app = this; // For clarity.
     // You can bind to the Application-level context here.
     // app.bind('foo').to(bar);
     app.component(RestComponent);
     app.controller(SamoflangeController);
     app.controller(DoohickeyController);
+  }
+
+  async start() {
+    // This is where you would asynchronously retrieve servers, providers and
+    // other components to configure them before launch.
+    const server = await app.getServer(RestServer);
+    server.bind('rest.port').to(8080);
+    server.api(WidgetApi);
+    // The superclass start method will call start on all servers that are
+    // bound to the application.
+    return await super.start();
   }
 
   async stop() {
@@ -72,7 +79,7 @@ Binding is the most commonly-demonstrated form of application configuration
 throughout our examples, and is the recommended method for setting up your
 application.
 
-In addition to the binding functions provided by [Context](Context.html),
+In addition to the binding functions provided by [Context](Context.md),
 the `Application` class also provides some sugar functions for commonly used
 bindings, like `component`, `server` and `controller`:
 
@@ -126,7 +133,7 @@ The `component` function allows binding of component constructors within
 your `Application` instance's context.
 
 For more information on how to make use of components,
-see [Using Components](Using-components.html).
+see [Using Components](Using-components.md).
 
 #### Controllers
 ```ts
@@ -134,7 +141,7 @@ app.controller(FooController);
 app.controller(BarController);
 ```
 Much like the component function, the `controller` function allows
-binding of [Controllers](Controllers.html) to the `Application` context.
+binding of [Controllers](Controllers.md) to the `Application` context.
 
 #### Servers
 ```ts
@@ -142,7 +149,7 @@ app.server(RestServer);
 app.servers([MyServer, GrpcServer]);
 ```
 The `server` function is much like the previous functions, but
-with [Servers](server.html) bulk bindings are possible through the function
+with [Servers](server.md) bulk bindings are possible through the function
 `servers`.
 
 ```ts
@@ -160,7 +167,7 @@ The `Application` class constructor also accepts an
 object which contains component-level configurations such as
 [`RestServerConfig`](http://apidocs.strongloop.com/@loopback%2frest/#RestServerConfig).
 It will automatically create bindings for these configurations and later be injected
-through dependency injections. Visit [Dependency Injection](Dependency-injection.html)
+through dependency injections. Visit [Dependency Injection](Dependency-injection.md)
 for more details.
 
 {% include note.html content="
@@ -183,15 +190,6 @@ export class MyApplication extends RestApplication {
 
 ## Tips for application setup
 Here are some tips to help avoid common pitfalls and mistakes.
-
-### Extend from `RestApplication` when using `RestServer`
-If you want to use `RestServer` from our `@loopback/rest` package, we recommend you extend
-`RestApplication` in your app instead of manually binding `RestServer` or
-`RestComponent`. `RestApplication` already uses `RestComponent` and makes
-useful functions in `RestServer` like `handler()` available at the app level.
-This means you can call these `RestServer` functions to do all of your
-server-level setups in the app constructor without having to explicitly retrieve
-an instance of your server.
 
 ### Use unique bindings
 Use binding names that are prefixed with a unique string that does not overlap
