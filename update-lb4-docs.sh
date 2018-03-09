@@ -1,4 +1,4 @@
-org=strongloop
+#!/bin/bash
 repo=loopback-next
 target=pages/en/lb4
 branch=move-docs-into-monorepo
@@ -11,9 +11,9 @@ curl -L https://github.com/$org/$repo/archive/$branch.tar.gz \
    | tar --strip-components 1 -C $tmp -xzf- '*.md'
 cp -R $tmp/packages $target/readmes/$repo
 #rename relative link extensions from md to html
-sed -E -i 's/\(([^(]+)\.md/(\1.html)/g' $tmp/docs/*.md
+sed -E -i '' 's/\(([^(]+)\.md/(\1.html/g' $tmp/docs/*.md
 #the following has only one occurence, but can be generalized if there is more
-sed -E -i 's/include previous.md/include previous.html/g' $tmp/docs/*.md
+sed -E -i '' 's/include previous.md/include previous.html/g' $tmp/docs/*.md
 
 mv $tmp/docs/*.md $target
 rm -rf $tmp
