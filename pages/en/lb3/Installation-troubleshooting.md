@@ -23,7 +23,7 @@ Ensure you have the latest stable version of Node as stated on [http://nodejs.o
 If you have to use `sudo`, use the following command:
 
 ```
-$ sudo npm install -g --unsafe-perm install strongloop
+$ sudo npm install -g --unsafe-perm strongloop
 ```
 
 ## Windows issues
